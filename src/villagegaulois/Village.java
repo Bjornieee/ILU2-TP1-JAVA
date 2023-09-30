@@ -8,10 +8,13 @@ public class Village {
 	private Chef chef;
 	private Gaulois[] villageois;
 	private int nbVillageois = 0;
+	private Marche marche;
+	private int nbEtal;
 
-	public Village(String nom, int nbVillageoisMaximum) {
+	public Village(String nom, int nbVillageoisMaximum, int nbEtal) {
 		this.nom = nom;
 		villageois = new Gaulois[nbVillageoisMaximum];
+		this.nbEtal = nbEtal;
 	}
 
 	public String getNom() {
@@ -20,6 +23,80 @@ public class Village {
 
 	public void setChef(Chef chef) {
 		this.chef = chef;
+	}
+
+	private static class Marche {
+		private Etal[] etals;
+
+		private Marche(int taille) {
+			etals = new Etal[taille];
+		}
+
+		void utiliserEtal(int indiceEtal, Gaulois vendeur, String produit, int nbProduit) {
+			if (etals[indiceEtal].isEtalOccupe() == false) {
+				etals[indiceEtal].occuperEtal(vendeur, produit, nbProduit);
+			} else {
+				System.out.println("Cet étal est déja occupé");
+			}
+		}
+
+		int trouverEtalLibre() {
+			int iEtal = -1;
+			for (int i = 0; (etals[i].isEtalOccupe()) && (i < etals.length); i++) {
+				if (etals[i].isEtalOccupe() == false)
+					iEtal = i;
+			}
+			return (iEtal);
+		}
+
+		Etal[] trouverEtals(String produit) {
+			int tailleTab = 0;
+			for (int i = 0; i < etals.length; i++) {
+				if (etals[i].contientProduit(produit)) tailleTab++;
+			}
+			Etal[] etalsAvecProd = new Etal[tailleTab];
+			switch (tailleTab){
+				case 0: break;
+				default:{
+					int indiceEtal = 0;
+					for (int i = 0; i < etals.length; i++) {
+						if (etals[i].isEtalOccupe() && etals[i].contientProduit(produit)) {
+							etalsAvecProd[indiceEtal] = etals[i];
+							indiceEtal++;
+
+						}
+					}
+				}
+			}
+			return etalsAvecProd;
+
+
+		}
+
+		Etal trouverVendeur(Gaulois gaulois) {
+			Etal iVendeur = new Etal();
+			iVendeur = null;
+			for (int i = 0; (etals[i].getVendeur() != gaulois) && (i < etals.length); i++) {
+				if (etals[i].getVendeur() == gaulois)
+					iVendeur = etals[i];
+			}
+			return (iVendeur);
+		}
+
+		void afficherMarche() {
+			int nbEtalOccupe = 0;
+			for (int i = 0; i < etals.length; i++) {
+				if (etals[i].isEtalOccupe()) {
+					etals[i].afficherEtal();
+					nbEtalOccupe++;
+				}
+				if (etals.length - 1 > nbEtalOccupe) {
+					StringBuilder chaine = new StringBuilder();
+					int nbEtalLibre = etals.length - nbEtalOccupe;
+					chaine.append("Il reste" + nbEtalLibre + "étals non utilisés sur le marché. \n");
+				}
+			}
+		}
 	}
 
 	public void ajouterHabitant(Gaulois gaulois) {
