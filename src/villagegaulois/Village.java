@@ -85,20 +85,22 @@ public class Village {
 			return (iVendeur);
 		}
 
-		void afficherMarche() {
-			int nbEtalOccupe = 0;
-			for (int i = 0; i < etals.length; i++) {
-				if (etals[i].isEtalOccupe()) {
-					etals[i].afficherEtal();
-					nbEtalOccupe++;
-				}
-				if (etals.length - 1 > nbEtalOccupe) {
-					StringBuilder chaine = new StringBuilder();
-					int nbEtalLibre = etals.length - nbEtalOccupe;
-					chaine.append("Il reste" + nbEtalLibre + "étals non utilisés sur le marché. \n");
-				}
-			}
-		}
+		String afficherMarche() {
+            int nbEtalOccupe = 0;
+            StringBuilder chaine = null;
+            for (int i = 0; i < etals.length; i++) {
+                if (etals[i].isEtalOccupe()) {
+                    etals[i].afficherEtal();
+                    nbEtalOccupe++;
+                }
+                chaine = new StringBuilder();
+                int nbEtalLibre = etals.length - nbEtalOccupe;
+                chaine.append("Il reste " + nbEtalLibre + " étals non utilisés sur le marché. \n");
+
+            }
+            return chaine.toString();
+        }
+
 	}
 
 	public String installerVendeur(Gaulois vendeur, String produit, int nbProduit) {
