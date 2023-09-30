@@ -14,6 +14,7 @@ public class Village {
 	public Village(String nom, int nbVillageoisMaximum, int nbEtal) {
 		this.nom = nom;
 		villageois = new Gaulois[nbVillageoisMaximum];
+		marche = new Marche(nbEtal);
 		this.nbEtal = nbEtal;
 	}
 
@@ -25,11 +26,11 @@ public class Village {
 		this.chef = chef;
 	}
 
-	private static class Marche {
+	private class Marche {
 		private Etal[] etals;
 
 		private Marche(int taille) {
-			etals = new Etal[taille];
+			etals = new Etal[nbEtal];
 		}
 
 		void utiliserEtal(int indiceEtal, Gaulois vendeur, String produit, int nbProduit) {
@@ -42,7 +43,7 @@ public class Village {
 
 		int trouverEtalLibre() {
 			int iEtal = -1;
-			for (int i = 0; (etals[i].isEtalOccupe()) && (i < etals.length); i++) {
+			for (int i = 0; ((i < etals.length) && etals[i].isEtalOccupe()); i++) {
 				if (etals[i].isEtalOccupe() == false)
 					iEtal = i;
 			}
@@ -55,9 +56,10 @@ public class Village {
 				if (etals[i].contientProduit(produit)) tailleTab++;
 			}
 			Etal[] etalsAvecProd = new Etal[tailleTab];
-			switch (tailleTab){
-				case 0: break;
-				default:{
+			switch (tailleTab) {
+				case 0:
+					break;
+				default: {
 					int indiceEtal = 0;
 					for (int i = 0; i < etals.length; i++) {
 						if (etals[i].isEtalOccupe() && etals[i].contientProduit(produit)) {
@@ -99,12 +101,17 @@ public class Village {
 		}
 	}
 
-	public string installerVendeur(Gaulois vendeur, String produit,int nbProduit){
+	public String installerVendeur(Gaulois vendeur, String produit, int nbProduit) {
 		StringBuilder chaine = new StringBuilder();
-		chaine append("Le vendeur" + vendeur + "cherche un endroit pour vendre" + nbProduit + produit + ".\n");
+		chaine.append ("Le vendeur " + vendeur.getNom() + " cherche un endroit pour vendre " + nbProduit +" "+ produit + ".\n");
 		int iEtalLibre = marche.trouverEtalLibre();
-		etals[iEtalLibre].occuperEtal(vendeur,produit,nbProduit);
+		if(iEtalLibre!=-1) {
+			marche.etals[iEtalLibre].occuperEtal(vendeur, produit, nbProduit);
+		}
+		return chaine.toString();
 	}
+
+
 	public void ajouterHabitant(Gaulois gaulois) {
 		if (nbVillageois < villageois.length) {
 			villageois[nbVillageois] = gaulois;
