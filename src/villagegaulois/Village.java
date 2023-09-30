@@ -99,6 +99,12 @@ public class Village {
 		}
 	}
 
+	public string installerVendeur(Gaulois vendeur, String produit,int nbProduit){
+		StringBuilder chaine = new StringBuilder();
+		chaine append("Le vendeur" + vendeur + "cherche un endroit pour vendre" + nbProduit + produit + ".\n");
+		int iEtalLibre = marche.trouverEtalLibre();
+		etals[iEtalLibre].occuperEtal(vendeur,produit,nbProduit);
+	}
 	public void ajouterHabitant(Gaulois gaulois) {
 		if (nbVillageois < villageois.length) {
 			villageois[nbVillageois] = gaulois;
