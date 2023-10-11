@@ -194,14 +194,17 @@ public class Village {
 
 	public String afficherVillageois() {
 		StringBuilder chaine = new StringBuilder();
-		if (nbVillageois < 1) {
-			chaine.append("Il n'y a encore aucun habitant au village du chef "
-					+ chef.getNom() + ".\n");
-		} else {
-			chaine.append("Au village du chef " + chef.getNom()
-					+ " vivent les légendaires gaulois :\n");
-			for (int i = 0; i < nbVillageois; i++) {
-				chaine.append("- " + villageois[i].getNom() + "\n");
+		if (chef == null) {
+			throw new VillageSansChefException("ce village n'as pas de chef");
+		} else { if (nbVillageois < 1) {
+				chaine.append("Il n'y a encore aucun habitant au village du chef "
+						+ chef.getNom() + ".\n");
+			} else {
+				chaine.append("Au village du chef " + chef.getNom()
+						+ " vivent les légendaires gaulois :\n");
+				for (int i = 0; i < nbVillageois; i++) {
+					chaine.append("- " + villageois[i].getNom() + "\n");
+				}
 			}
 		}
 		return chaine.toString();

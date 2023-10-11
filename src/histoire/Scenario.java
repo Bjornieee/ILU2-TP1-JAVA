@@ -5,13 +5,16 @@ import personnages.Druide;
 import personnages.Gaulois;
 import villagegaulois.Etal;
 import villagegaulois.Village;
+import villagegaulois.VillageSansChefException;
+
+import java.util.Scanner;
 
 public class Scenario {
 
 	public static void main(String[] args) {
 		Village village = new Village("le village des irréductibles", 10, 5);
 		Chef abraracourcix = new Chef("Abraracourcix", 10, village);
-		village.setChef(abraracourcix);
+		//village.setChef(abraracourcix);
 
 		Druide druide = new Druide("Panoramix", 2, 5, 10);
 		Gaulois obelix = new Gaulois("Obélix", 25);
@@ -25,7 +28,18 @@ public class Scenario {
 		village.ajouterHabitant(obelix);
 		village.ajouterHabitant(druide);
 		village.ajouterHabitant(abraracourcix);
-		village.afficherVillageois();
+		try {
+			village.afficherVillageois();
+		} catch (VillageSansChefException e){
+			System.out.println("Entrez le nom du chef :\n");
+			Scanner sc = new Scanner(System.in);
+			String nom = sc.nextLine();
+			System.out.println("Entrez la force du chef :\n");
+			int force = sc.nextInt();
+			Chef chef = new Chef(nom , force, village);
+			village.setChef(chef);
+			village.afficherVillageois();
+		}
 
 		System.out.println(village.installerVendeur(bonemine, "fleurs", 20));
 		System.out.println(village.installerVendeur(assurancetourix, "lyres", 5));
@@ -34,11 +48,21 @@ public class Scenario {
 
 		System.out.println(village.rechercherVendeursProduit("fleurs"));
 		Etal etalFleur = village.rechercherEtal(bonemine);
-		System.out.println(etalFleur.acheterProduit(10, abraracourcix));
-		System.out.println(etalFleur.acheterProduit(15, obelix));
-		System.out.println(etalFleur.acheterProduit(15, assurancetourix));
-		System.out.println(village.partirVendeur(bonemine));
-		System.out.println(village.afficherMarche());
+        try {
+            System.out.println(etalFleur.acheterProduit(-2, abraracourcix));
+        } catch(IllegalArgumentException|IllegalStateException e){}
+		try {
+			System.out.println(etalFleur.acheterProduit(15, obelix));
+		} catch(IllegalArgumentException|IllegalStateException e){}
+			try {
+				System.out.println(etalFleur.acheterProduit(15, assurancetourix));
+			}catch(IllegalArgumentException|IllegalStateException e){}
+				System.out.println(village.partirVendeur(bonemine));
+				System.out.println(village.afficherMarche());
 	}
 
 }
+
+
+
+

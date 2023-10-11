@@ -1,0 +1,14 @@
+
+g
+java:S1301;"KReplace this "switch" statement by "if" statements to increase readability.(€¾Ù[8÷™½®1
+f
+java:S2259e"DA "NullPointerException" could be thrown; "chaine" is nullable here.(ùÖòÄüÿÿÿÿ8Úä™½®1
+O
+java:S1172 "-Remove this unused method parameter "taille".(¡˜øÁùÿÿÿÿ8”‚™½®1
+I
+java:S1125%"'Remove the unnecessary boolean literal.(ïÚëêøÿÿÿÿ8•‚™½®1
+F	java:S106("+Replace this use of System.out by a logger.(¿½š8•‚™½®1
+I
+java:S1125/"'Remove the unnecessary boolean literal.(½Ã†°şÿÿÿÿ8•‚™½®1
+X
+java:S1854O"<Remove this useless assignment to local variable "iVendeur".(îœ8–‚™½®1
