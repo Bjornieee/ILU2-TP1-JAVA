@@ -73,13 +73,16 @@ public class Village {
 
 		}
 
-		//TODO reprendre la boucle
+		//TODO reprendre la boucle (done)
 		Etal trouverVendeur(Gaulois gaulois) {
 			Etal iVendeur;
 			iVendeur = null;
-			for (int i = 0; i < etals.length && etals[i].getVendeur().equals(gaulois); i++) {
+			for (int i = 0; i < etals.length; i++) {
+				Gaulois vendeur = etals[i].getVendeur();
+				if (vendeur.equals(gaulois)) {
 				iVendeur = etals[i];
 				break;
+				}
 			}
 			return (iVendeur);
 		}
