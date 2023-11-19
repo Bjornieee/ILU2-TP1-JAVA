@@ -24,8 +24,7 @@ public class Village {
 		this.chef = chef;
 	}
 
-	//TODO Vérifier private public static non static
-	private class Marche {
+	private static class Marche {
 		private Etal[] etals;
 
 		private Marche(int nbEtal) {
@@ -73,7 +72,6 @@ public class Village {
 
 		}
 
-		//TODO reprendre la boucle (done)
 		Etal trouverVendeur(Gaulois gaulois) {
 			Etal iVendeur;
 			iVendeur = null;
@@ -90,14 +88,14 @@ public class Village {
 		public String afficherMarche() {
 			int nbEtalOccupe = 0;
 			StringBuilder chaine = new StringBuilder();
-			for (int i = 0; i < marche.etals.length; i++) {
-				if (marche.etals[i].isEtalOccupe()) {
-					chaine.append(marche.etals[i].afficherEtal());
+			for (int i = 0; i < etals.length; i++) {
+				if (etals[i].isEtalOccupe()) {
+					chaine.append(etals[i].afficherEtal());
 					chaine.append("\n");
 					nbEtalOccupe++;
 				}
 			}
-			int nbEtalLibre = marche.etals.length - nbEtalOccupe;
+			int nbEtalLibre = etals.length - nbEtalOccupe;
 			chaine.append("Il reste " + nbEtalLibre + " Ã©tals non utilisÃ©s sur le marchÃ©. \n");
 			return chaine.toString();
 
@@ -123,7 +121,6 @@ public class Village {
 		return chaine.toString();
 	}
 
-	//TODO gérer toutes les sorties
 	public String rechercherVendeursProduit(String produit) {
 		StringBuilder chaine = new StringBuilder();
 		chaine.append("Les vendeurs qui proposent des ");
